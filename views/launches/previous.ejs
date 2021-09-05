@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate')%>
+    <h1> Previous Launch Information </h1>
+
+
+    <%for(let launch of launchData) {%>
+
+        <div class="card" style="width: 10rem;">
+            <img class="card-img-top" src="<%=launch.data.links.mission_patch%>" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%=launch.data.mission_name%>
+                </h5>
+                <p class="card-text">
+                    <%=launch.data.details%>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Launch Year: <%=launch.data.launch_year%>
+                </li>
+                <li class="list-group-item">Rocket Used: <%=launch.data.rocket.rocket_name%>
+                </li>
+                <li class="list-group-item">Launched From: <%=launch.data.launch_site.site_name_long%>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="<%=launch.data.links.wikipedia%>" class="card-link">Wikipedia Link</a>
+                <a href="<%=launch.data.links.video_link%>" class="card-link">Youtube Link</a>
+            </div>
+        </div>
+
+        <%}%>
