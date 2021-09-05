@@ -3,6 +3,8 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const morgan = require('morgan');
 
+//Routes
+const launchRoutes = require('./routes/launches');
 
 //Launch Express
 const app = express();
@@ -15,6 +17,9 @@ app.use(morgan('dev'));
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
+
+app.use('/launch', launchRoutes)
+
 
 // Home Directory for SpaceX
 app.get('/', (req, res) => {
