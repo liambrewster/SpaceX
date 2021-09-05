@@ -1,0 +1,20 @@
+{
+  "name": "SpaceX",
+  "version": "1.0.0",
+  "description": "<img src=\"https://github.com/liambrewster/liambrewster/blob/main/image/LB%20Dev%20Logo.png\" width=\"150\" height=\"150\">",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liambrewster/SpaceX.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liambrewster/SpaceX/issues"
+  },
+  "homepage": "https://github.com/liambrewster/SpaceX#readme"
+}
