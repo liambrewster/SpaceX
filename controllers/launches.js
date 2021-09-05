@@ -24,11 +24,11 @@ module.exports.upcomingLaunch = async (req, res) => {
 
 module.exports.previousLaunch = async (req, res) => {
     try {
-        const launchData = await axios.get('https://api.spacexdata.com/v3/launches')
+        const respData = await axios.get('https://api.spacexdata.com/v3/launches')
+        const launchData = respData.data
         res.render('launches/previous', { launchData })
-
     } catch (error) {
-        console.log(error.body);
+        console.log(error);
         res.send("We Have a Problem")
     }
 };
