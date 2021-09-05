@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate')%>
-    <h1> Previous Launch Information </h1>
+    <h1> Upcoming Launch Information </h1>
     <div class="row d-inline-flex justify-content-around">
-        <% for (var i=launchData.length-1; i>=0;i--) { %>
+        <% for (var i=0 ;i<launchData.length; i++) { %>
             <div class="card ml-3 mb-2" style="width: 18rem;">
                 <%if(launchData[i].links.patch.small){ %>
                     <img class="card-img-top" src="<%=launchData[i].links.patch.small%>" alt="Mission Patch">
