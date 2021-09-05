@@ -24,3 +24,14 @@ module.exports.previousLaunch = async (req, res) => {
         res.send("We Have a Problem")
     }
 };
+
+module.exports.testLaunch = async (req, res) => {
+    try {
+        const respData = await axios.get('https://api.spacexdata.com/v4/launches/past')
+        const launchData = respData.data
+        res.render('launches/previous', { launchData })
+    } catch (error) {
+        console.log(error);
+        res.send("We Have a Problem")
+    }
+};
