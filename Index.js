@@ -3,6 +3,8 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+const idPlugin = require('mongoose-id');
 
 //Routes
 const launchRoutes = require('./routes/launches');
@@ -11,8 +13,6 @@ const launchRoutes = require('./routes/launches');
 mongoose.connect('mongodb://localhost:27017/spacex', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
 });
 
 const db = mongoose.connection;

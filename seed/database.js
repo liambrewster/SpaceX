@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Launch = require('../models/launches');
+const axios = require('axios');
+const { fileLoader } = require('ejs');
 
 mongoose.connect('mongodb://localhost:27017/spacex', {
     useNewUrlParser: true,
@@ -12,46 +14,42 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("√√√ Database connected");
 });
-// this is the calculation to pick a random entry from an array of information
 
-const seedDB = async () => {
+const seedLaunchDB = async () => {
+    const respData = await axios.get('https://api.spacexdata.com/v4/launches/latest')
+    const lD = respData.data
     await Launch.deleteMany({});
     const liftoff = new Launch({
-        "fairings": null,
+        "fairings": lD.fairings,
         "links": {
             "patch": {
-                "small": "https://i.imgur.com/ZBUSrcD.png",
-                "large": "https://i.imgur.com/yPv13SR.png"
+                "small": lD.links.patch.small,
+                "large": lD.links.patch.large
             },
             "reddit": {
-                "campaign": "https://www.reddit.com/r/spacex/comments/p67i27/crs23_launch_campaign_thread/",
-                "launch": "https://www.reddit.com/r/spacex/comments/pcj0ao/rspacex_crs23_launch_docking_discussion_updates/",
-                "media": null,
-                "recovery": null
+                "campaign": lD.links.reddit.campaign,
+                "launch": lD.links.reddit.launch,
+                "media": lD.links.reddit.media,
+                "recovery": lD.links.reddit.recovery
             },
             "flickr": {
                 "small": [],
-                "original": [
-                    "https://live.staticflickr.com/65535/51411435986_82d7088b61_o.jpg",
-                    "https://live.staticflickr.com/65535/51411702583_fe67991413_o.jpg",
-                    "https://live.staticflickr.com/65535/51411702573_de10cdbc06_o.jpg",
-                    "https://live.staticflickr.com/65535/51411435116_ac7b3cc3d1_o.jpg"
-                ]
+                "original": []
             },
-            "presskit": null,
-            "webcast": "https://youtu.be/x-KiDqxAMU0",
-            "youtube_id": "x-KiDqxAMU0",
-            "article": null,
-            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-23"
+            "presskit": lD.links.presskit,
+            "webcast": lD.links.webcast,
+            "youtube_id": lD.links.youtube_id,
+            "article": lD.links.article,
+            "wikipedia": lD.links.wikipedia
         },
-        "static_fire_date_utc": "2021-08-26T02:49:00.000Z",
-        "static_fire_date_unix": 1629946140,
-        "net": false,
-        "window": 0,
+        "static_fire_date_utc": lD.static_fire_date_utc,
+        "static_fire_date_unix": lD.static_fire_date_unix,
+        "net": lD.net,
+        "window": lD.window,
         "rocket": "5e9d0d95eda69973a809d1ec",
         "success": true,
         "failures": [],
-        "details": "SpaceX's 23rd ISS resupply mission on behalf of NASA, this mission brings essential supplies to the International Space Station using the cargo variant of SpaceX's Dragon 2 spacecraft. Cargo includes several science experiments. The booster for this mission is expected to land on an ASDS. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+        "details": lD.details,
         "crew": [],
         "ships": [
             "5ea6ed2d080df4000697c904"
@@ -89,7 +87,7 @@ const seedDB = async () => {
     await liftoff.save();
 
 };
-seedDB().then(() => {
+seedLaunchDB().then(() => {
     mongoose.connection.close();
-    console.log("Database has been updated √")
+    console.log("Launch Database has been updated √")
 })
