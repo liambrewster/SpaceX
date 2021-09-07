@@ -2,9 +2,24 @@ const express = require('express');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 //Routes
 const launchRoutes = require('./routes/launches');
+
+//connect to Mongo DB
+mongoose.connect('mongodb://localhost:27017/spacex', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("√√√ Database Connected");
+});
 
 //Launch Express
 const app = express();
